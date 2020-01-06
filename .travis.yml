@@ -1,0 +1,22 @@
+sudo: reqiured
+services:
+    - docker
+
+before_install:
+    - docker build -t norix/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+    - docker run -e CI=true norix/react-test npm run test
+
+after_success:
+    - docker build -t norix/multi-client ./client
+    - docker build -t norix/multi-nginx ./nginx
+    - docker build -t norix/multi-server ./server
+    - docker build -t norix/multi-worker ./worker
+    # Log in to the docker CLI
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    # Take those images and push them to docker hub
+    - docker push norix/multi-client
+    - docker push norix/multi-nginx
+    - docker push norix/multi-server
+    - docker push norix/multi-worker
