@@ -21,13 +21,22 @@ spec:
             - name: REDIS_HOST
               value: redis-cluster-ip-service
             - name: REDIS_PORT
-              value: 6379
+              value: '6379' #Should be as string
             - name: PGUSER
               value: postgres
             - name: PGHOST
               value: postgres-cluster-ip-service
             - name: PGPORT
-              value: 5432
+              value: '5432'
             - name: PGDATABASE
               value: postgres
+            - name: PGPASSWORD
+              valueFrom: #Value from created Secret object
+                secretKeyRef:
+                  name: pgpassword #'secret_name'
+                  key: PGPASSWORD #key
               #For password will be used "Secret" type of object.
+              #Using imperative command:
+              #kubectl create secret generic 'secret_name' --from-literal key=value
+              #For example in this case it was:
+              #kubectl create secret generic pgpassword --from-literal PGPASSWORD=someSecretValue ;)
