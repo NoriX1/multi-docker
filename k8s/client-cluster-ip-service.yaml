@@ -10,3 +10,11 @@ spec:
   ports:
     - port: 3000 #from 3000 service port
       targetPort: 3000 #to 3000 container port
+
+# We can join all config files into single file:
+# To do this, write '---' to the next line after the part of config
+# And then, at new line, enter a second part of config (For another kind or type)
+#CONFIG 1
+#---
+#CONFIG 2
+# etc ...
