@@ -15,3 +15,8 @@ spec:
       containers:
         - name: worker
           image: norix/multi-worker
+          env:
+            - name: REDIS_HOST
+              value: redis-cluster-ip-service # see redis-cluster-ip-service.yaml, name prop in metadata  
+            - name: REDIS_PORT
+              value: 6379 # see redis-cluster-ip-service.yaml, port prop in ports
